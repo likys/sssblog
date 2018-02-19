@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simpleblog</title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag   'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>   
+   <nav class="navbar navbar-default">
+   	<div class ="container">
+
+   	  <div class="navbar-header">
+       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+ 	  <a class="navbar-brand" href="#">SimpleBlog</a>
+	  </div>
+
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="nav navbar-nav ">
+          <li ><%= link_to "Home",home_path %></li>
+        </ul>
+         <ul class="nav navbar-nav navbar-right ">
+          <li ><%= link_to "create Post",new_post_path %></li>
+        </ul>
+   	  </div>
+     </div>
+    </nav>
+<div class="container">
+
+    <%= yield %>
+  </div>
+  </body>
+</html>
