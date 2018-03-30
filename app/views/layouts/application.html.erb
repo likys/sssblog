@@ -13,7 +13,6 @@
    	<div class ="container">
 
    	  <div class="navbar-header">
-       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
  	  <a class="navbar-brand" href="#">SimpleBlog</a>
@@ -23,8 +22,20 @@
         <ul class="nav navbar-nav ">
           <li ><%= link_to "Home",home_path %></li>
         </ul>
+        <ul class="nav navbar-nav navbar-right ">
+          <% if user_signed_in? %>
+            <li><%= link_to current_user.email, user_path(current_user) %></li>
+            <li><%= link_to 'Edit profile', edit_user_registration_path %></li>
+            <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+          <% else %>
+            <li><%= link_to 'Sign up', new_user_registration_path %>
+            <li><%= link_to 'Login', new_user_session_path %>
+          <% end %>
+        </ul>
          <ul class="nav navbar-nav navbar-right ">
-          <li ><%= link_to "create Post",new_post_path %></li>
+          <% if user_signed_in? %>
+            <li ><%= link_to "create Post",new_post_path %></li>
+          <% end %>
         </ul>
    	  </div>
      </div>

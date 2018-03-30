@@ -1,51 +1,50 @@
 class PostsController < ApplicationController
-	http_basic_authenticate_with name: "likys",password:"1234",except: [:index,:show]
+	before_action :find_post, only: [:show, :edit , :update , :destroy]
+	# http_basic_authenticate_with name: "likys",password: "1234",except: [:index,:show]
 
 	def index
-		@posts =Post.all
+		@posts = Post.all
 	end
 
 	def show
 		# render :layout => nil
-		@post =Post.find(params[:id])
-
 	end
 
 	def new
-		@post =Post.new
+		@post = Post.new
 	end
 
 	def edit
-		@post =Post.find(params[:id])
 	end
-	
+
 	def update
-		@post =Post.find(params[:id])
-		if(@post.update(post_params))
-		redirect_to @post
+		if @post.update(post_params)
+			redirect_to @post
 		else
 			render 'edit'
 		end
 	end
 
 	def destroy
-		@post=Post.find(params[:id])
 		@post.destroy
-
-		redirect_to posts_path
+		redirect_to about_path
 	end
-	def create
-		# render plain:params[:post].inspect
-		@post = Post.new(post_params)
 
-		if(@post.save)
-		redirect_to @post
+	def create
+		@post = current_user.posts.new post_params
+		if @post.save
+			redirect_to @post
 		else
 			render 'new'
 		end
 	end
 
-	private def post_params
-	params.require(:post).permit(:title,:body)
+	private 
+	def post_params
+		params.require(:post).permit(:title,:body)
+	end
+
+	def find_post
+		@post = Post.find(params[:id])
 	end
 end
