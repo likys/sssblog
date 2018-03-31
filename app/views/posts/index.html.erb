@@ -1,9 +1,11 @@
-<h1>Blog Posts</h1>
-<% @posts.each do |post| %>
-	<div class="well">
-		<h3><%= link_to post.title, post_path(post) %></h3>
-		<p> <%= post.body %></p>
-		<p><%= link_to post.user.email, user_path(post.user) %></p>
-		<%= link_to "Read More",post_path(post), :class => 'btn btn_default' %>
-	</div>
-<% end %>
+<div id="posts">
+	<h1>Blog Posts</h1>
+	<% @posts.each do |post| %>
+		<div class="well">
+			<h3><%= link_to post.title, post_path(post) %></h3>
+			<p> <%= post.body %></p>
+			<p>Author:<%= link_to post.user.email, user_path(post.user) %>  Date:<%= post.user.created_at.strftime("%Y-%m-%d  %H:%M:%S %p") %></p>
+			<%= link_to "Read More",post_path(post), :class => 'btn btn_default' %>
+		</div>
+	<% end %>
+</div>

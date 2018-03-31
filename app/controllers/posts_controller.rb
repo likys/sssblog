@@ -19,6 +19,7 @@ class PostsController < ApplicationController
 
 	def update
 		if @post.update(post_params)
+			ActionCable.server.broadcast 'posts', html: render_to_string('posts/index',layout:false), id: @post.id
 			redirect_to @post
 		else
 			render 'edit'
@@ -33,6 +34,8 @@ class PostsController < ApplicationController
 	def create
 		@post = current_user.posts.new post_params
 		if @post.save
+			@posts = Post.all
+			ActionCable.server.broadcast 'posts', html: render_to_string('posts/index', layout:false), id: @post.id
 			redirect_to @post
 		else
 			render 'new'

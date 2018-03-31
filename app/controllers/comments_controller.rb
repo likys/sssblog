@@ -1,7 +1,6 @@
 class CommentsController < ApplicationController
 
 	before_action :user_signed_in?
-	before_action :set_post, only: :destroy
 	# http_basic_authenticate_with name: "likys",password:"1234",only: [:destroy]
 
 	def create
@@ -12,18 +11,13 @@ class CommentsController < ApplicationController
 	end
 
 	def destroy
-		@comment = @post.comments.find(params[:id])
+		@post = Post.find_by_id(params[:post_id])
+		@comment = current_user.comments.find(params[:id])
 		@comment.destroy
 		redirect_to post_path(@post)
-		
 	end
 
 	private
-
-	def set_post
-		@post = current_user.posts.find_by_id(params[:post_id])
-		raise StandardError, "not_belongs_to_u"
-	end
 
 	def comment_params
 		params.require(:comment).permit(:body)

@@ -1,4 +1,33 @@
 <p id="notice"><%= notice %></p>
+<div class="row">
+    <h3>用户信息</h3>
+    <%= @user.email %>
+</div>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<div class="row">
+    <h3>发表过的博文</h3>
+    <% if @user.posts.present? %>
+        <% @user.posts.each do |post| %>
+            <p><%= link_to post.title, post_path(post) %></p>
+        <% end %>
+    <% else %>
+        没有发表的文章
+    <% end %>
+</div>
+
+<div class="row">
+    <h3>发表过的评论</h3>
+    <% if @user.comments.present? %>
+        <% @user.comments.each do |comment| %>
+            <p><%= link_to comment.title, comment_path(comment) %></p>
+        <% end %>
+    <% else %>
+        没有发表的评论
+    <% end %>
+</div>
+
+<div class="row">
+    <%= link_to 'Edit', edit_user_path(@user) %> |
+    <%= link_to 'Back', users_path %>
+    <%= link_to '返回上一页', :back %>
+</div>
